@@ -42,7 +42,7 @@ def lex(code):
         elif char == ']':
             tokens.append(Token(Token.BRACKET_CLOSE))
         elif char == ',':
-            tokens.append(Token(Token.BRACKET_CLOSE))
+            tokens.append(Token(Token.COMMA))
         elif char == '"':
             string = ''
             while True:
