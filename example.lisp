@@ -1,2 +1,2 @@
 
-(println ((fn [a, b] (* a b)) 5 8))
+(+ abcd 1 2 3)

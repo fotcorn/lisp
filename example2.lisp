@@ -25,3 +25,5 @@
 (println (map (fn [v] (* v v)) (list 1 2 3 4 5 6)))
 
 (println ((fn [v] (* v v)) 5))
+
+(println ((fn [a, b] (* a b)) 5 8))

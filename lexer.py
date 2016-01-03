@@ -10,6 +10,7 @@ class Token(object):
     BRACKET_OPEN = 6
     BRACKET_CLOSE = 7
     COMMA = 8
+    END_OF_FILE = 9
 
     def __init__(self, token_type, value=None):
         self.type = token_type
@@ -69,4 +70,5 @@ def lex(code):
             raise Exception(u'Unknown character: {}'.format(char))
 
         i += 1
+    tokens.append(Token(Token.END_OF_FILE))
     return tokens

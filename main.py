@@ -10,4 +10,6 @@ if __name__ == '__main__':
     tokens = lex(program)
 
     ast = parse(tokens)
+    for expression in ast:
+        print expression.expressions
     # run(ast)
