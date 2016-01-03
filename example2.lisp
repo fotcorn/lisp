@@ -28,6 +28,16 @@
 (println ((fn [x] (* x x)) 5))  # execute inline defined function
 
 
+# closure
+(def adder (fn [x]
+    (fn [y] (+ x y))
+))
+
+(def addfive (adder 5))
+
+(println (addfive 10))
+
+
 # condition test
 (println (if (< a 5) "A is smaller than 5" "A is bigger or equal to 5"))
 
