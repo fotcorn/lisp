@@ -51,10 +51,11 @@ class Interpreter(object):
                     variable = self.variables[operator.value]
                     if variable.type != Value.FUNCTION:
                         raise Exception(u'Trying to call non-function value: {}'.format(variable))
+                    raise Exception('not implemented')  # TODO: execute function
                 else:
                     raise Exception(u'Trying to call unknown function: {}'.format(operator.value))
             elif isinstance(operator, Function):
-                pass  # TODO: execute function
+                raise Exception('not implemented')  # TODO: execute function
             else:
                 raise Exception(u'Trying to execute non-function as function')
 
