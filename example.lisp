@@ -1,6 +1,24 @@
-# function tests
+# basics
+(+ 1 2 3)
+(println (+ 1 2 3))
+(println "Hello World!")
+(println 1 2 3)
+(println (+ 1 (+ 2 8)))
+
+# simple variable tests
+
+(def a 5)
+(def x (+ a 10))
+
+# functions
+(println ((fn [v] (* v v)) 5))
+
+(println ((fn [a, b] (* a b)) 5 8))
+
 (def five (fn [] 5))
 (println (five))
+
+(def hello (fn [] "Hello world"))
 
 
 (def quad (fn [x] (* x x)))

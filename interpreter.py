@@ -24,10 +24,10 @@ class Interpreter(object):
         elif isinstance(value, Function):
             return Value(Value.FUNCTION, value)
         elif isinstance(value, Identifier):
-            if value.value in self.variables:
-                return self.variables[value.value]
-            elif value.value in variable_context:
+            if value.value in variable_context:
                 return variable_context[value.value]
+            elif value.value in self.variables:
+                return self.variables[value.value]
             else:
                 raise Exception(u'Unknown variable {}'.format(value.value))
         elif isinstance(value, Call):
