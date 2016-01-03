@@ -57,7 +57,7 @@ class Parser(object):
             if self.current_token.type == Token.END_OF_FILE:
                 break
             elif self.accept(Token.EXPRESSION_START):
-                expressions.append(self.expression())
+                expressions.append(self.call())
         return expressions
 
     def next_token(self):
