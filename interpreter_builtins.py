@@ -19,6 +19,24 @@ def minus(interpreter, values):
     return Value(Value.INTEGER, minus_sum)
 
 
+def mul(interpreter, values):
+    mul_sum = values[0].value
+    for value in values[1:]:
+        if not value.type == Value.INTEGER:
+            raise Exception('Minus operator: unsupported operand: {}'.format(value))
+        mul_sum *= value.value
+    return Value(Value.INTEGER, mul_sum)
+
+
+def div(interpreter, values):
+    div_sum = values[0].value
+    for value in values[1:]:
+        if not value.type == Value.INTEGER:
+            raise Exception('Minus operator: unsupported operand: {}'.format(value))
+        div_sum /= value.value
+    return Value(Value.INTEGER, div_sum)
+
+
 def println(interpreter, values):
     print u' '.join(map(lambda v: unicode(v.value), values))
 
@@ -26,5 +44,7 @@ def println(interpreter, values):
 builtins = {
     '+': plus,
     '-': minus,
+    '*': mul,
+    '/': div,
     'println': println,
 }

@@ -1,3 +1,9 @@
+(def five (fn [] 5))
+(println (five))
+
+
 (def quad (fn [x] (* x x)))
 
-(quad 5)
+(println (quad 5))
+
+(println ((fn [x] (* x x)) 5))

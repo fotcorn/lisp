@@ -1,3 +1,5 @@
+import itertools
+
 from interpreter_value import Value
 from parser import Identifier, Function, Number, String, Call
 import interpreter_builtins
@@ -12,9 +14,9 @@ class Interpreter(object):
 
     def run(self):
         for expression in self.ast:
-            self.evaluate(expression)
+            self.evaluate(expression, {})
 
-    def evaluate(self, value):
+    def evaluate(self, value, variable_context):
         if isinstance(value, Number):
             return Value(Value.INTEGER, value.value)
         elif isinstance(value, String):
@@ -24,24 +26,32 @@ class Interpreter(object):
         elif isinstance(value, Identifier):
             if value.value in self.variables:
                 return self.variables[value.value]
+            elif value.value in variable_context:
+                return variable_context[value.value]
             else:
                 raise Exception(u'Unknown variable {}'.format(value.value))
         elif isinstance(value, Call):
             operator = value.expressions[0]
+
+            if isinstance(operator, Function):
+                values = []
+                for param in value.expressions[1:]:
+                    values.append(self.evaluate(param, variable_context))
+                return self.function(operator, values, variable_context)
 
             if operator.value == 'def':
                 if not len(value.expressions) == 3:
                     raise Exception(u'def takes exactly two arguments')
                 if not isinstance(value.expressions[1], Identifier):
                     raise Exception(u'The first argument of def must be an identifier')
-                variable_value = self.evaluate(value.expressions[2])
+                variable_value = self.evaluate(value.expressions[2], variable_context)
                 variable_name = value.expressions[1].value
                 self.variables[variable_name] = variable_value
                 return
 
             values = []
             for param in value.expressions[1:]:
-                values.append(self.evaluate(param))
+                values.append(self.evaluate(param, variable_context))
 
             if isinstance(operator, Identifier):
                 if operator.value in self.builtins:
@@ -51,13 +61,21 @@ class Interpreter(object):
                     variable = self.variables[operator.value]
                     if variable.type != Value.FUNCTION:
                         raise Exception(u'Trying to call non-function value: {}'.format(variable))
-                    raise Exception('not implemented')  # TODO: execute function
+                    return self.function(variable.value, values, variable_context)
                 else:
                     raise Exception(u'Trying to call unknown function: {}'.format(operator.value))
-            elif isinstance(operator, Function):
-                raise Exception('not implemented')  # TODO: execute function
             else:
                 raise Exception(u'Trying to execute non-function as function')
+
+    def function(self, func, params, variable_context):
+        if len(func.param_names) != len(params):
+            raise Exception(u'Argument count does not match')
+
+        variable_context = variable_context.copy()
+        for param_name, param_value in itertools.izip(func.param_names, params):
+            variable_context[param_name] = param_value
+
+        return self.evaluate(func.expression, variable_context)
 
 
 def run(ast):
