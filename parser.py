@@ -1,30 +1,44 @@
 from lexer import Token
 
 
-class Number(object):
+class ValueNode(object):
     def __init__(self, value):
         self.value = value
 
-
-class String(object):
-    def __init__(self, value):
-        self.value = value
+    def __str__(self):
+        return u'{}: {}'.format(self.__class__.__name__, self.value)
 
 
-class Identifier(object):
-    def __init__(self, value):
-        self.value = value
+class Number(ValueNode):
+    pass
+
+
+class String(ValueNode):
+    pass
+
+
+class Identifier(ValueNode):
+    pass
 
 
 class Function(object):
-    def __init__(self, names, expressions):
-        self.names = names
-        self.expressions = self.expressions
+    def __init__(self, param_names, expressions):
+        self.param_names = param_names
+        self.expressions = expressions
+
+    def __str__(self):
+        return u'Function: [{}] ({})'.format(
+                u', '.join(map(unicode, self.param_names)),
+                u', '.join(map(unicode, self.expressions))
+        )
 
 
 class Expression(object):
     def __init__(self, expressions):
         self.expressions = expressions
+
+    def __str__(self):
+        return u'Expression: ({})'.format(u', '.join(map(unicode, self.expressions)))
 
 
 def parse(tokens):

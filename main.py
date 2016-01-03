@@ -11,5 +11,5 @@ if __name__ == '__main__':
 
     ast = parse(tokens)
     for expression in ast:
-        print expression.expressions
+        print expression
     # run(ast)
