@@ -89,6 +89,8 @@ class Parser(object):
                 current_expression.append(String(self.last_token.value))
             elif self.accept(Token.IDENTIFIER):
                 current_expression.append(Identifier(self.last_token.value))
+            elif self.accept(Token.EXPRESSION_START):
+                current_expression.append(self.expression())
             elif self.accept(Token.EXPRESSION_END):
                 break
             else:
