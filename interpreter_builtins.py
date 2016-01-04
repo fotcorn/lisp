@@ -44,6 +44,23 @@ def println(interpreter, values):
 def create_list(interpreter, values):
     return Value(Value.LIST, list(values))
 
+
+def map_list(interpreter, values):
+    if not len(values) == 2:
+        raise Exception(u'map required two params: <function> <list>')
+    func, list_value = values
+    if func.type != Value.FUNCTION:
+        raise Exception(u'First parameter of map must be a function')
+    if list_value.type != Value.LIST:
+        raise Exception(u'Second parameter of map must be a list')
+
+    ret = []
+    for value in list_value.value:
+        ret.append(interpreter.function(func.value, [value], {}))
+
+    return Value(Value.LIST, ret)
+
+
 builtins = {
     '+': plus,
     '-': minus,
@@ -51,4 +68,5 @@ builtins = {
     '/': div,
     'println': println,
     'list': create_list,
+    'map': map_list,
 }
