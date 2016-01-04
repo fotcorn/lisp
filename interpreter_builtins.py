@@ -38,8 +38,11 @@ def div(interpreter, values):
 
 
 def println(interpreter, values):
-    print u' '.join(map(lambda v: unicode(v.value), values))
+    print u' '.join(map(Value.print_value, values))
 
+
+def create_list(interpreter, values):
+    return Value(Value.LIST, list(values))
 
 builtins = {
     '+': plus,
@@ -47,4 +50,5 @@ builtins = {
     '*': mul,
     '/': div,
     'println': println,
+    'list': create_list,
 }
