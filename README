@@ -1,0 +1,11 @@
+An interpreter for a simple Lisp/Scheme like language.
+License: MIT
+
+TODO:
+* Add more list functions: car, cdr, cpr, ctr (possible under other, more modern names)
+* Support closures
+* Support conditions
+
+Files:
+* example.list: Example Code for the last implemented feature
+* example2.list: Code examples of everything what should be supported in the future
