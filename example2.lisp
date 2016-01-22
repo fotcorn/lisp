@@ -58,5 +58,13 @@
 (println (addnine 2))
 
 
+# boolean variables
+(println true)
+(println false)
+
+(def a true)
+(println a)
+(println (not a))
+
 # condition test
 (println (if (< a 5) "A is smaller than 5" "A is bigger or equal to 5"))

@@ -114,16 +114,59 @@ def list_tail(interpreter, values):
     l = _single_param_list_func(values, 'tail')
     return Value(Value.LIST, l[1:])
 
+
+def boolean_not(interpreter, values):
+    if len(values) == 0:
+        raise NotEnoughParametersException(u'not requires one parameter')
+    if len(values) > 1:
+        raise TooManyParametersException(u'not requires one parameter')
+    boolean = values[0]
+    if boolean.type != Value.BOOLEAN:
+        raise UnsupportedParameterType(u'parameter of not must be a boolean')
+    return Value(Value.BOOLEAN, not boolean.value)
+
+
+def boolean_and(interpreter, values):
+    if len(values) < 2:
+        raise NotEnoughParametersException(u'and requires at least two parameters')
+    if values[0].type != Value.BOOLEAN:
+        raise UnsupportedParameterType(u'parameters of and must be booleans')
+    boolean = values[0].value
+    for value in values[1:]:
+        if not value.type == Value.BOOLEAN:
+            raise UnsupportedParameterType(u'parameters of and must be booleans')
+        boolean = boolean and value.value
+    return Value(Value.BOOLEAN, boolean)
+
+
+def boolean_or(interpreter, values):
+    if len(values) < 2:
+        raise NotEnoughParametersException(u'or requires at least two parameters')
+    if values[0].type != Value.BOOLEAN:
+        raise UnsupportedParameterType(u'parameters of or must be booleans')
+    boolean = values[0].value
+    for value in values[1:]:
+        if not value.type == Value.BOOLEAN:
+            raise UnsupportedParameterType(u'parameters of or must be booleans')
+        boolean = boolean or value.value
+    return Value(Value.BOOLEAN, boolean)
+
 builtins = {
     '+': plus,
     '-': minus,
     '*': mul,
     '/': div,
+
     'println': println,
+
     'list': create_list,
     'map': list_map,
     'first': list_first,
     'last': list_last,
     'head': list_head,
     'tail': list_tail,
+
+    'not': boolean_not,
+    'and': boolean_and,
+    'or': boolean_or,
 }

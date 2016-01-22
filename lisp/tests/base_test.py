@@ -16,7 +16,7 @@ class BaseTestCase(unittest.TestCase):
         interpreter = Interpreter(ast, interpreter_builtins.builtins, stdout=stdout_file)
         interpreter.run()
 
-        self.assertEqual(stdout, stdout_file.getvalue())
+        self.assertEqual(stdout_file.getvalue(), stdout)
 
     def assert_exception(self, program, exception_type):
         tokens = lex(program)

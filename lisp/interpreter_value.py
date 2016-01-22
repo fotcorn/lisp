@@ -4,6 +4,7 @@ class Value(object):
     STRING = 2
     FUNCTION = 3
     LIST = 4
+    BOOLEAN = 5
 
     def __init__(self, value_type, value, variable_context=None):
         self.type = value_type
@@ -15,6 +16,8 @@ class Value(object):
             return u'Integer: {}'.format(self.value)
         elif self.type == Value.STRING:
             return u'String: {}'.format(self.value)
+        elif self.type == Value.BOOLEAN:
+            return u'Boolean: {}'.format(unicode(self.value).lower())
         elif self.type == Value.FUNCTION:
             return u'Function: {}'.format(self.value)
         elif self.type == Value.LIST:
@@ -28,6 +31,8 @@ class Value(object):
             return unicode(self.value)
         elif self.type == Value.STRING:
             return self.value
+        elif self.type == Value.BOOLEAN:
+            return unicode(self.value).lower()
         elif self.type == Value.FUNCTION:
             return unicode(self.value)
         elif self.type == Value.LIST:

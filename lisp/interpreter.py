@@ -26,7 +26,11 @@ class Interpreter(object):
         elif isinstance(value, Function):
             return Value(Value.FUNCTION, value, variable_context)
         elif isinstance(value, Identifier):
-            if value.value in variable_context:
+            if value.value == 'true':
+                return Value(Value.BOOLEAN, True)
+            elif value.value == 'false':
+                return Value(Value.BOOLEAN, False)
+            elif value.value in variable_context:
                 return variable_context[value.value]
             elif value.value in self.variables:
                 return self.variables[value.value]

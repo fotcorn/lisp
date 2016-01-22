@@ -1,8 +1,6 @@
-# more list operations
-(def l (list 1 2 3 4))
+(println true)
+(println false)
 
-(println (first l))
-(println (last l))
-
-(println (head l))
-(println (tail l))
+(def a true)
+(println a)
+(println (not a))
