@@ -2,7 +2,18 @@ An interpreter for a simple Lisp/Scheme like language.
 License: MIT
 
 Execute a file:
+
     python -m lisp example.lisp
+
+
+Execute all tests:
+
+    python -m lisp.tests
+
+
+Execute single test:
+
+    python -m unittest lisp.tests.math.MathTestCase.test_plus
 
 Files:
 * example.list: Example Code for the last implemented feature
