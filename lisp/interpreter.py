@@ -1,9 +1,9 @@
-import sys
 import itertools
+import sys
 
+import interpreter_builtins
 from interpreter_value import Value
 from parser import Identifier, Function, Number, String, Call
-import interpreter_builtins
 
 
 class Interpreter(object):
