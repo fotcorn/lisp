@@ -22,7 +22,7 @@ class Interpreter(object):
         elif isinstance(value, String):
             return Value(Value.STRING, value.value)
         elif isinstance(value, Function):
-            return Value(Value.FUNCTION, value)
+            return Value(Value.FUNCTION, value, variable_context)
         elif isinstance(value, Identifier):
             if value.value in variable_context:
                 return variable_context[value.value]
@@ -61,7 +61,9 @@ class Interpreter(object):
                     variable = self.variables[operator.value]
                     if variable.type != Value.FUNCTION:
                         raise Exception(u'Trying to call non-function value: {}'.format(variable))
-                    return self.function(variable.value, values, variable_context)
+                    func_context = variable_context.copy()
+                    func_context.update(variable.variable_context)
+                    return self.function(variable.value, values, func_context)
                 else:
                     raise Exception(u'Trying to call unknown function: {}'.format(operator.value))
             else:

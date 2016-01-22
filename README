@@ -3,7 +3,6 @@ License: MIT
 
 TODO:
 * Add more list functions: car, cdr, cpr, ctr (possible under other, more modern names)
-* Support closures
 * Support conditions
 
 Files:

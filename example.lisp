@@ -1,4 +1,10 @@
+(def adder (fn [x]
+    (fn [y] (+ x y))
+))
 
-(def quad (fn [x] (* x x)))
+(def addfive (adder 5))
 
-(println (map (fn [v] (* v v)) (list 1 2 3 4 5 6)))
+(def addnine (adder 9))
+
+(println (addfive 10))
+(println (addnine 2))

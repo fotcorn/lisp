@@ -5,9 +5,10 @@ class Value(object):
     FUNCTION = 3
     LIST = 4
 
-    def __init__(self, value_type, value):
+    def __init__(self, value_type, value, variable_context=None):
         self.type = value_type
         self.value = value
+        self.variable_context = variable_context
 
     def __str__(self):
         if self.type == Value.INTEGER:
