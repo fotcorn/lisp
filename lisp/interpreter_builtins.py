@@ -85,7 +85,7 @@ def list_map(interpreter, values):
 def _single_param_list_func(values, name, min_length=False):
     if len(values) == 0:
         raise NotEnoughParametersException(u'{} requires one parameter: <list>'.format(name))
-    if len(values) > 0:
+    if len(values) > 1:
         raise TooManyParametersException(u'{} requires one parameter: <list>'.format(name))
     l = values[0]
     if l.type != Value.LIST:
