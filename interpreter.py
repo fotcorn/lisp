@@ -1,3 +1,4 @@
+import sys
 import itertools
 
 from interpreter_value import Value
@@ -7,10 +8,11 @@ import interpreter_builtins
 
 class Interpreter(object):
 
-    def __init__(self, ast, builtins):
+    def __init__(self, ast, builtins, stdout=sys.stdout):
         self.variables = {}
         self.builtins = builtins
         self.ast = ast
+        self.stdout = stdout
 
     def run(self):
         for expression in self.ast:

@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from interpreter_value import Value
 
 
@@ -38,7 +40,7 @@ def div(interpreter, values):
 
 
 def println(interpreter, values):
-    print u' '.join(map(Value.print_value, values))
+    print(u' '.join(map(Value.print_value, values)), file=interpreter.stdout)
 
 
 def create_list(interpreter, values):
