@@ -1,9 +1,12 @@
 An interpreter for a simple Lisp/Scheme like language.
 License: MIT
 
-TODO:
-* Support conditions
+Execute a file:
+    python -m lisp example.lisp
 
 Files:
 * example.list: Example Code for the last implemented feature
 * example2.list: Code examples of everything what should be supported in the future
+
+TODO:
+* Support conditions
