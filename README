@@ -2,7 +2,6 @@ An interpreter for a simple Lisp/Scheme like language.
 License: MIT
 
 TODO:
-* Add more list functions: car, cdr, cpr, ctr (possible under other, more modern names)
 * Support conditions
 
 Files:

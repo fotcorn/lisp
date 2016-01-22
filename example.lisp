@@ -1,10 +1,8 @@
-(def adder (fn [x]
-    (fn [y] (+ x y))
-))
+# more list operations
+(def l (list 1 2 3 4))
 
-(def addfive (adder 5))
+(println (first l))
+(println (last l))
 
-(def addnine (adder 9))
-
-(println (addfive 10))
-(println (addnine 2))
+(println (head l))
+(println (tail l))

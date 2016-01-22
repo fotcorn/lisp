@@ -45,7 +45,7 @@ def create_list(interpreter, values):
     return Value(Value.LIST, list(values))
 
 
-def map_list(interpreter, values):
+def list_map(interpreter, values):
     if not len(values) == 2:
         raise Exception(u'map required two params: <function> <list>')
     func, list_value = values
@@ -61,6 +61,36 @@ def map_list(interpreter, values):
     return Value(Value.LIST, ret)
 
 
+def _single_param_list_func(values, name, min_length=False):
+    if len(values) != 1:
+        raise Exception(u'{} required one parameter: <list>'.format(name))
+    l = values[0]
+    if l.type != Value.LIST:
+        raise Exception(u'parameter of {} must be a list'.format(name))
+    if min_length and len(l.value) == 0:
+        raise Exception(u'{}: list needs at least one element'.format(name))
+    return l.value
+
+
+def list_first(interpreter, values):
+    l = _single_param_list_func(values, 'first', True)
+    return l[0]
+
+
+def list_last(interpreter, values):
+    l = _single_param_list_func(values, 'last', True)
+    return l[-1]
+
+
+def list_head(interpreter, values):
+    l = _single_param_list_func(values, 'head')
+    return Value(Value.LIST, l[:-1])
+
+
+def list_tail(interpreter, values):
+    l = _single_param_list_func(values, 'tail')
+    return Value(Value.LIST, l[1:])
+
 builtins = {
     '+': plus,
     '-': minus,
@@ -68,5 +98,9 @@ builtins = {
     '/': div,
     'println': println,
     'list': create_list,
-    'map': map_list,
+    'map': list_map,
+    'first': list_first,
+    'last': list_last,
+    'head': list_head,
+    'tail': list_tail,
 }

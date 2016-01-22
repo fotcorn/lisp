@@ -27,7 +27,17 @@
 
 (println ((fn [x] (* x x)) 5))  # execute inline defined function
 
+
 # lists
+(def l (list 1 2 3 4))
+
+(println (first l))
+(println (last l))
+
+(println (head l))
+(println (tail l))
+
+# map lists
 (println (list 1 2 3 4))
 
 (println (map quad (list 1 2 3 4 5 6)))
@@ -42,7 +52,10 @@
 
 (def addfive (adder 5))
 
+(def addnine (adder 9))
+
 (println (addfive 10))
+(println (addnine 2))
 
 
 # condition test
