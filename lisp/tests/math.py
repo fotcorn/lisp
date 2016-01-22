@@ -1,4 +1,5 @@
 from lisp.tests.base_test import BaseTestCase
+from lisp.tests.interpreter_exceptions import NotEnoughParametersException
 
 
 class MathTestCase(BaseTestCase):
@@ -15,7 +16,7 @@ class MathTestCase(BaseTestCase):
     def test_mul(self):
         self.assert_stdout('(println (* 2 3 4))', '24\n')
 
-    # single parameter
+    # single params
     def test_plus_single(self):
         self.assert_stdout('(println (+ 5))', '5\n')
 
@@ -27,3 +28,16 @@ class MathTestCase(BaseTestCase):
 
     def test_mul_single(self):
         self.assert_stdout('(println (* 5))', '5\n')
+
+    # no params
+    def test_plus_no_params(self):
+        self.assert_exception('(+)', NotEnoughParametersException)
+
+    def test_minus_no_params(self):
+        self.assert_exception('(-)', NotEnoughParametersException)
+
+    def test_div_no_params(self):
+        self.assert_exception('(/)', NotEnoughParametersException)
+
+    def test_mul_no_params(self):
+        self.assert_exception('(*)', NotEnoughParametersException)

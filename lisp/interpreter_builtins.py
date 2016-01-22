@@ -1,9 +1,12 @@
 from __future__ import print_function
 
 from lisp.interpreter_value import Value
+from lisp.tests.interpreter_exceptions import NotEnoughParametersException
 
 
 def plus(interpreter, values):
+    if len(values) == 0:
+        raise NotEnoughParametersException(u'+ requires at least one parameter')
     plus_sum = 0
     for value in values:
         if not value.type == Value.INTEGER:
@@ -13,6 +16,8 @@ def plus(interpreter, values):
 
 
 def minus(interpreter, values):
+    if len(values) == 0:
+        raise NotEnoughParametersException(u'- requires at least one parameter')
     minus_sum = values[0].value
     if len(values) == 1:
         minus_sum = - minus_sum
@@ -25,6 +30,8 @@ def minus(interpreter, values):
 
 
 def mul(interpreter, values):
+    if len(values) == 0:
+        raise NotEnoughParametersException(u'* requires at least one parameter')
     mul_sum = values[0].value
     for value in values[1:]:
         if not value.type == Value.INTEGER:
@@ -34,6 +41,8 @@ def mul(interpreter, values):
 
 
 def div(interpreter, values):
+    if len(values) == 0:
+        raise NotEnoughParametersException(u'/ requires at least one parameter')
     div_sum = values[0].value
     for value in values[1:]:
         if not value.type == Value.INTEGER:

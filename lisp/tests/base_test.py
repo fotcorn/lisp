@@ -17,3 +17,10 @@ class BaseTestCase(unittest.TestCase):
         interpreter.run()
 
         self.assertEqual(stdout, stdout_file.getvalue())
+
+    def assert_exception(self, program, exception_type):
+        tokens = lex(program)
+        ast = parse(tokens)
+
+        interpreter = Interpreter(ast, interpreter_builtins.builtins)
+        self.assertRaises(exception_type, interpreter.run)
