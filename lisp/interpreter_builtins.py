@@ -13,8 +13,8 @@ def plus(interpreter, values):
 
 
 def minus(interpreter, values):
-    minus_sum = 0
-    for value in values:
+    minus_sum = values[0].value
+    for value in values[1:]:
         if not value.type == Value.INTEGER:
             raise Exception('Minus operator: unsupported operand: {}'.format(value))
         minus_sum -= value.value
