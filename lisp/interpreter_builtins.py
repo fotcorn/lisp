@@ -1,6 +1,6 @@
 from __future__ import print_function
 
-from interpreter_value import Value
+from lisp.interpreter_value import Value
 
 
 def plus(interpreter, values):

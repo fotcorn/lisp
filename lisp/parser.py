@@ -1,4 +1,4 @@
-from lexer import Token
+from lisp.lexer import Token
 
 
 class ValueNode(object):

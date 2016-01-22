@@ -1,9 +1,9 @@
 import itertools
 import sys
 
-import interpreter_builtins
-from interpreter_value import Value
-from parser import Identifier, Function, Number, String, Call
+from lisp import interpreter_builtins
+from lisp.interpreter_value import Value
+from lisp.parser import Identifier, Function, Number, String, Call
 
 
 class Interpreter(object):
