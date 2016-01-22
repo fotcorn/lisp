@@ -19,6 +19,8 @@ def plus(interpreter, values):
 def minus(interpreter, values):
     if len(values) == 0:
         raise NotEnoughParametersException(u'- requires at least one parameter')
+    if values[0].type != Value.INTEGER:
+        raise UnsupportedParameterType(u'- operator: unsupported operand: {}'.format(values[0].value))
     minus_sum = values[0].value
     if len(values) == 1:
         minus_sum = - minus_sum
@@ -33,6 +35,8 @@ def minus(interpreter, values):
 def mul(interpreter, values):
     if len(values) == 0:
         raise NotEnoughParametersException(u'* requires at least one parameter')
+    if values[0].type != Value.INTEGER:
+        raise UnsupportedParameterType(u'- operator: unsupported operand: {}'.format(values[0].value))
     mul_sum = values[0].value
     for value in values[1:]:
         if not value.type == Value.INTEGER:
@@ -44,6 +48,8 @@ def mul(interpreter, values):
 def div(interpreter, values):
     if len(values) == 0:
         raise NotEnoughParametersException(u'/ requires at least one parameter')
+    if values[0].type != Value.INTEGER:
+        raise UnsupportedParameterType(u'- operator: unsupported operand: {}'.format(values[0].value))
     div_sum = values[0].value
     for value in values[1:]:
         if not value.type == Value.INTEGER:

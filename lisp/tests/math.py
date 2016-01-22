@@ -1,5 +1,5 @@
+from lisp.interpreter_exceptions import NotEnoughParametersException, UnsupportedParameterType
 from lisp.tests.base_test import BaseTestCase
-from lisp.tests.interpreter_exceptions import NotEnoughParametersException
 
 
 class MathTestCase(BaseTestCase):
@@ -41,3 +41,29 @@ class MathTestCase(BaseTestCase):
 
     def test_mul_no_params(self):
         self.assert_exception('(*)', NotEnoughParametersException)
+
+    # bad parameter types 1
+    def test_plus_bad_params1(self):
+        self.assert_exception('(+ "String" 5)', UnsupportedParameterType)
+
+    def test_minus_bad_params1(self):
+        self.assert_exception('(- "String" 5)', UnsupportedParameterType)
+
+    def test_div_bad_params1(self):
+        self.assert_exception('(/ "String" 5)', UnsupportedParameterType)
+
+    def test_mul_bad_params1(self):
+        self.assert_exception('(* "String" 5)', UnsupportedParameterType)
+
+    # bad parameter types 2
+    def test_plus_bad_params2(self):
+        self.assert_exception('(+ 5 "String")', UnsupportedParameterType)
+
+    def test_minus_bad_params2(self):
+        self.assert_exception('(- 5 "String")', UnsupportedParameterType)
+
+    def test_div_bad_params2(self):
+        self.assert_exception('(/ 5 "String")', UnsupportedParameterType)
+
+    def test_mul_bad_params2(self):
+        self.assert_exception('(* 5 "String")', UnsupportedParameterType)
