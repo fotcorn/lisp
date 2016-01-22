@@ -14,3 +14,16 @@ class MathTestCase(BaseTestCase):
 
     def test_mul(self):
         self.assert_stdout('(println (* 2 3 4))', '24\n')
+
+    # single parameter
+    def test_plus_single(self):
+        self.assert_stdout('(println (+ 5))', '5\n')
+
+    def test_minus_single(self):
+        self.assert_stdout('(println (- 5))', '-5\n')
+
+    def test_div_single(self):
+        self.assert_stdout('(println (/ 5))', '5\n')
+
+    def test_mul_single(self):
+        self.assert_stdout('(println (* 5))', '5\n')
