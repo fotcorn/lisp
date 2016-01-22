@@ -1,8 +1,8 @@
 from __future__ import print_function
 
-from lisp.interpreter_value import Value
-from lisp.tests.interpreter_exceptions import NotEnoughParametersException, UnsupportedParameterType, \
+from lisp.interpreter_exceptions import NotEnoughParametersException, UnsupportedParameterType, \
     TooManyParametersException
+from lisp.interpreter_value import Value
 
 
 def plus(interpreter, values):
