@@ -1,7 +1,8 @@
 from __future__ import print_function
 
 from lisp.interpreter_value import Value
-from lisp.tests.interpreter_exceptions import NotEnoughParametersException
+from lisp.tests.interpreter_exceptions import NotEnoughParametersException, UnsupportedParameterType, \
+    TooManyParametersException
 
 
 def plus(interpreter, values):
@@ -10,7 +11,7 @@ def plus(interpreter, values):
     plus_sum = 0
     for value in values:
         if not value.type == Value.INTEGER:
-            raise Exception('Plus operator: unsupported operand: {}'.format(value))
+            raise UnsupportedParameterType(u'+ operator: unsupported operand: {}'.format(value))
         plus_sum += value.value
     return Value(Value.INTEGER, plus_sum)
 
@@ -24,7 +25,7 @@ def minus(interpreter, values):
     else:
         for value in values[1:]:
             if not value.type == Value.INTEGER:
-                raise Exception('Minus operator: unsupported operand: {}'.format(value))
+                raise UnsupportedParameterType(u'- operator: unsupported operand: {}'.format(value))
             minus_sum -= value.value
     return Value(Value.INTEGER, minus_sum)
 
@@ -35,7 +36,7 @@ def mul(interpreter, values):
     mul_sum = values[0].value
     for value in values[1:]:
         if not value.type == Value.INTEGER:
-            raise Exception('Minus operator: unsupported operand: {}'.format(value))
+            raise UnsupportedParameterType(u'* operator: unsupported operand: {}'.format(value))
         mul_sum *= value.value
     return Value(Value.INTEGER, mul_sum)
 
@@ -46,7 +47,7 @@ def div(interpreter, values):
     div_sum = values[0].value
     for value in values[1:]:
         if not value.type == Value.INTEGER:
-            raise Exception('Minus operator: unsupported operand: {}'.format(value))
+            raise UnsupportedParameterType(u'/ operator: unsupported operand: {}'.format(value))
         div_sum /= value.value
     return Value(Value.INTEGER, div_sum)
 
@@ -61,12 +62,12 @@ def create_list(interpreter, values):
 
 def list_map(interpreter, values):
     if not len(values) == 2:
-        raise Exception(u'map required two params: <function> <list>')
+        raise NotEnoughParametersException(u'map required two params: <function> <list>')
     func, list_value = values
     if func.type != Value.FUNCTION:
-        raise Exception(u'First parameter of map must be a function')
+        raise UnsupportedParameterType(u'First parameter of map must be a function')
     if list_value.type != Value.LIST:
-        raise Exception(u'Second parameter of map must be a list')
+        raise UnsupportedParameterType(u'Second parameter of map must be a list')
 
     ret = []
     for value in list_value.value:
@@ -76,13 +77,15 @@ def list_map(interpreter, values):
 
 
 def _single_param_list_func(values, name, min_length=False):
-    if len(values) != 1:
-        raise Exception(u'{} required one parameter: <list>'.format(name))
+    if len(values) == 0:
+        raise NotEnoughParametersException(u'{} requires one parameter: <list>'.format(name))
+    if len(values) > 0:
+        raise TooManyParametersException(u'{} requires one parameter: <list>'.format(name))
     l = values[0]
     if l.type != Value.LIST:
-        raise Exception(u'parameter of {} must be a list'.format(name))
+        raise UnsupportedParameterType(u'parameter of {} must be a list'.format(name))
     if min_length and len(l.value) == 0:
-        raise Exception(u'{}: list needs at least one element'.format(name))
+        raise UnsupportedParameterType(u'{}: list needs at least one element'.format(name))
     return l.value
 
 

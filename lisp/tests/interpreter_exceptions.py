@@ -7,3 +7,11 @@ class BaseInterpreterException(Exception):
 
 class NotEnoughParametersException(BaseInterpreterException):
     pass
+
+
+class TooManyParametersException(BaseInterpreterException):
+    pass
+
+
+class UnsupportedParameterType(BaseInterpreterException):
+    pass
