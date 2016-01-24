@@ -18,6 +18,3 @@ Execute single test:
 Files:
 * example.list: Example Code for the last implemented feature
 * example2.list: Code examples of everything what should be supported in the future
-
-TODO:
-* Support conditions
