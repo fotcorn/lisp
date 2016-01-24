@@ -151,11 +151,102 @@ def boolean_or(interpreter, values):
         boolean = boolean or value.value
     return Value(Value.BOOLEAN, boolean)
 
+
+def _two_param_integer_func(values, name):
+    if len(values) < 2:
+        raise NotEnoughParametersException(u'{} requires three parameters'.format(name))
+    if len(values) > 2:
+        raise TooManyParametersException(u'{} requires three parameters'.format(name))
+    if values[0].type != Value.INTEGER:
+        raise UnsupportedParameterType(u'first parameter of {} must be an integer'.format(name))
+    if values[1].type != Value.INTEGER:
+        raise UnsupportedParameterType(u'second parameter of {} must be an integer'.format(name))
+    return values[0].value, values[1].value
+
+
+def smaller_than(interpreter, values):
+    value1, value2 = _two_param_integer_func(values, u'<')
+    if value1 < value2:
+        return Value(Value.BOOLEAN, True)
+    else:
+        return Value(Value.BOOLEAN, False)
+
+
+def bigger_than(interpreter, values):
+    value1, value2 = _two_param_integer_func(values, u'<')
+    if value1 > value2:
+        return Value(Value.BOOLEAN, True)
+    else:
+        return Value(Value.BOOLEAN, False)
+
+
+def smaller_or_equal_than(interpreter, values):
+    value1, value2 = _two_param_integer_func(values, u'<')
+    if value1 <= value2:
+        return Value(Value.BOOLEAN, True)
+    else:
+        return Value(Value.BOOLEAN, False)
+
+
+def bigger_or_equal_than(interpreter, values):
+    value1, value2 = _two_param_integer_func(values, u'<')
+    if value1 >= value2:
+        return Value(Value.BOOLEAN, True)
+    else:
+        return Value(Value.BOOLEAN, False)
+
+
+def equals(interpreter, values):
+    if len(values) < 2:
+        raise NotEnoughParametersException(u'== requires two parameters')
+    if len(values) > 2:
+        raise TooManyParametersException(u'== requires two parameters')
+    value1, value2 = values
+    if value1.type != value2.type:
+        raise UnsupportedParameterType(u'both parameters of == must be the same type')
+    return value1.value == value2.value
+
+
+def not_equals(interpreter, values):
+    if len(values) < 2:
+        raise NotEnoughParametersException(u'== requires two parameters')
+    if len(values) > 2:
+        raise TooManyParametersException(u'== requires two parameters')
+    value1, value2 = values
+    if value1.type != value2.type:
+        raise UnsupportedParameterType(u'both parameters of == must be the same type')
+    return value1.value != value2.value
+
+
+def if_builtin(interpreter, values):
+    if len(values) < 3:
+        raise NotEnoughParametersException(u'if requires three parameters')
+    if len(values) > 3:
+        raise TooManyParametersException(u'if requires three parameters')
+
+    condition, true_value, false_value = values
+
+    if condition.type != Value.BOOLEAN:
+        raise UnsupportedParameterType(u'first parameter of if must be a boolean')
+
+    if condition.value:
+        return true_value
+    else:
+        return false_value
+
 builtins = {
     '+': plus,
     '-': minus,
     '*': mul,
     '/': div,
+
+    '<': smaller_than,
+    '>': bigger_than,
+    '<=': smaller_or_equal_than,
+    '>=': bigger_or_equal_than,
+
+    '==': equals,
+    '!=': not_equals,
 
     'println': println,
 
@@ -169,4 +260,6 @@ builtins = {
     'not': boolean_not,
     'and': boolean_and,
     'or': boolean_or,
+
+    'if': if_builtin,
 }

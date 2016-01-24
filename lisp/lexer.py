@@ -57,9 +57,9 @@ def lex(code):
                 i += 1
                 if i >= len(code) or code[i] == '\n':
                     break
-        elif re.match(r'[a-zA-Z\+\-\*/<>]', char):
+        elif re.match(r'[a-zA-Z\+\-\*/<>=!]', char):
             identifier = char
-            while re.match(r'[a-zA-Z\+\-\*/<>0-9]', code[i + 1]):
+            while re.match(r'[a-zA-Z\+\-\*/<>=!0-9]', code[i + 1]):
                 identifier += code[i + 1]
                 i += 1
             tokens.append(Token(Token.IDENTIFIER, identifier))

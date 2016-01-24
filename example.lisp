@@ -1,6 +1,3 @@
-(println true)
-(println false)
+(def a 2)
 
-(def a true)
-(println a)
-(println (not a))
+(println (if (< a 5) "A is smaller than 5" "A is bigger or equal to 5"))
