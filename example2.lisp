@@ -67,4 +67,5 @@
 (println (not a))
 
 # condition test
-(println (if (< a 5) "A is smaller than 5" "A is bigger or equal to 5"))
+(def b 9)
+(println (if (< b 5) "b is smaller than 5" "b is bigger or equal to 5"))
