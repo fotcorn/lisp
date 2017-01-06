@@ -1,5 +1,5 @@
 import unittest
-from StringIO import StringIO
+from io import StringIO
 
 from lisp import interpreter_builtins
 from lisp.interpreter import Interpreter

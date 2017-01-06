@@ -6,7 +6,7 @@ class ValueNode(object):
         self.value = value
 
     def __str__(self):
-        return u'{}: {}'.format(self.__class__.__name__, self.value)
+        return '{}: {}'.format(self.__class__.__name__, self.value)
 
 
 class Number(ValueNode):
@@ -27,7 +27,7 @@ class Function(object):
         self.expression = expression
 
     def __str__(self):
-        return u'Function: [{}] ({})'.format(u', '.join(map(unicode, self.param_names)), self.expression)
+        return 'Function: [{}] ({})'.format(', '.join(map(str, self.param_names)), self.expression)
 
 
 class Call(object):
@@ -35,7 +35,7 @@ class Call(object):
         self.expressions = expressions
 
     def __str__(self):
-        return u'Call: ({})'.format(u', '.join(map(unicode, self.expressions)))
+        return 'Call: ({})'.format(', '.join(map(str, self.expressions)))
 
 
 def parse(tokens):
@@ -70,12 +70,12 @@ class Parser(object):
             self.next_token()
             return True
         elif self.current_token.type == Token.END_OF_FILE:
-            raise Exception(u'Unexpected end of file {}'.format(self.current_token))
+            raise Exception('Unexpected end of file {}'.format(self.current_token))
         return False
 
     def expect(self, token_type):
         if not self.accept(token_type):
-            raise Exception(u'Parse error on token {}'.format(self.current_token))
+            raise Exception('Parse error on token {}'.format(self.current_token))
 
     def expression(self):
         if self.current_token.type == Token.IDENTIFIER and self.current_token.value == 'fn':
@@ -95,7 +95,7 @@ class Parser(object):
         elif self.accept(Token.EXPRESSION_END):
             return None
         else:
-            raise Exception(u'Parse error on token {}'.format(self.current_token))
+            raise Exception('Parse error on token {}'.format(self.current_token))
 
     def call(self):
         current_expression = []
@@ -120,9 +120,9 @@ class Parser(object):
             elif self.accept(Token.BRACKET_CLOSE):
                 break
             else:
-                raise Exception(u'Parse error in function parameter list on token {}'.format(self.current_token))
+                raise Exception('Parse error in function parameter list on token {}'.format(self.current_token))
         value = self.value()
         if not value:
-            raise Exception(u'Parse error on token {}'.format(self.current_token))
+            raise Exception('Parse error on token {}'.format(self.current_token))
         self.expect(Token.EXPRESSION_END)
         return Function(function_params, value)

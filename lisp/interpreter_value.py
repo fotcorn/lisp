@@ -13,27 +13,24 @@ class Value(object):
 
     def __str__(self):
         if self.type == Value.INTEGER:
-            return u'Integer: {}'.format(self.value)
+            return 'Integer: {}'.format(self.value)
         elif self.type == Value.STRING:
-            return u'String: {}'.format(self.value)
+            return 'String: {}'.format(self.value)
         elif self.type == Value.BOOLEAN:
-            return u'Boolean: {}'.format(unicode(self.value).lower())
+            return 'Boolean: {}'.format(str(self.value).lower())
         elif self.type == Value.FUNCTION:
-            return u'Function: {}'.format(self.value)
+            return 'Function: {}'.format(self.value)
         elif self.type == Value.LIST:
-            return u'List: [{}]'.format(', '.join(map(unicode, self.value)))
-
-    def __unicode__(self):
-        return self.__str__()
+            return 'List: [{}]'.format(', '.join(map(str, self.value)))
 
     def print_value(self):
         if self.type == Value.INTEGER:
-            return unicode(self.value)
+            return str(self.value)
         elif self.type == Value.STRING:
             return self.value
         elif self.type == Value.BOOLEAN:
-            return unicode(self.value).lower()
+            return str(self.value).lower()
         elif self.type == Value.FUNCTION:
-            return unicode(self.value)
+            return str(self.value)
         elif self.type == Value.LIST:
-            return u'[{}]'.format(', '.join(map(Value.print_value, self.value)))
+            return '[{}]'.format(', '.join(map(Value.print_value, self.value)))

@@ -7,59 +7,59 @@ from lisp.interpreter_value import Value
 
 def plus(interpreter, values):
     if len(values) == 0:
-        raise NotEnoughParametersException(u'+ requires at least one parameter')
+        raise NotEnoughParametersException('+ requires at least one parameter')
     plus_sum = 0
     for value in values:
         if not value.type == Value.INTEGER:
-            raise UnsupportedParameterType(u'+ operator: unsupported operand: {}'.format(value))
+            raise UnsupportedParameterType('+ operator: unsupported operand: {}'.format(value))
         plus_sum += value.value
     return Value(Value.INTEGER, plus_sum)
 
 
 def minus(interpreter, values):
     if len(values) == 0:
-        raise NotEnoughParametersException(u'- requires at least one parameter')
+        raise NotEnoughParametersException('- requires at least one parameter')
     if values[0].type != Value.INTEGER:
-        raise UnsupportedParameterType(u'- operator: unsupported operand: {}'.format(values[0].value))
+        raise UnsupportedParameterType('- operator: unsupported operand: {}'.format(values[0].value))
     minus_sum = values[0].value
     if len(values) == 1:
         minus_sum = - minus_sum
     else:
         for value in values[1:]:
             if not value.type == Value.INTEGER:
-                raise UnsupportedParameterType(u'- operator: unsupported operand: {}'.format(value))
+                raise UnsupportedParameterType('- operator: unsupported operand: {}'.format(value))
             minus_sum -= value.value
     return Value(Value.INTEGER, minus_sum)
 
 
 def mul(interpreter, values):
     if len(values) == 0:
-        raise NotEnoughParametersException(u'* requires at least one parameter')
+        raise NotEnoughParametersException('* requires at least one parameter')
     if values[0].type != Value.INTEGER:
-        raise UnsupportedParameterType(u'- operator: unsupported operand: {}'.format(values[0].value))
+        raise UnsupportedParameterType('- operator: unsupported operand: {}'.format(values[0].value))
     mul_sum = values[0].value
     for value in values[1:]:
         if not value.type == Value.INTEGER:
-            raise UnsupportedParameterType(u'* operator: unsupported operand: {}'.format(value))
+            raise UnsupportedParameterType('* operator: unsupported operand: {}'.format(value))
         mul_sum *= value.value
     return Value(Value.INTEGER, mul_sum)
 
 
 def div(interpreter, values):
     if len(values) == 0:
-        raise NotEnoughParametersException(u'/ requires at least one parameter')
+        raise NotEnoughParametersException('/ requires at least one parameter')
     if values[0].type != Value.INTEGER:
-        raise UnsupportedParameterType(u'- operator: unsupported operand: {}'.format(values[0].value))
+        raise UnsupportedParameterType('- operator: unsupported operand: {}'.format(values[0].value))
     div_sum = values[0].value
     for value in values[1:]:
         if not value.type == Value.INTEGER:
-            raise UnsupportedParameterType(u'/ operator: unsupported operand: {}'.format(value))
-        div_sum /= value.value
+            raise UnsupportedParameterType('/ operator: unsupported operand: {}'.format(value))
+        div_sum //= value.value
     return Value(Value.INTEGER, div_sum)
 
 
 def println(interpreter, values):
-    print(u' '.join(map(Value.print_value, values)), file=interpreter.stdout)
+    print(' '.join(map(Value.print_value, values)), file=interpreter.stdout)
 
 
 def create_list(interpreter, values):
@@ -68,12 +68,12 @@ def create_list(interpreter, values):
 
 def list_map(interpreter, values):
     if not len(values) == 2:
-        raise NotEnoughParametersException(u'map required two params: <function> <list>')
+        raise NotEnoughParametersException('map required two params: <function> <list>')
     func, list_value = values
     if func.type != Value.FUNCTION:
-        raise UnsupportedParameterType(u'First parameter of map must be a function')
+        raise UnsupportedParameterType('First parameter of map must be a function')
     if list_value.type != Value.LIST:
-        raise UnsupportedParameterType(u'Second parameter of map must be a list')
+        raise UnsupportedParameterType('Second parameter of map must be a list')
 
     ret = []
     for value in list_value.value:
@@ -84,14 +84,14 @@ def list_map(interpreter, values):
 
 def _single_param_list_func(values, name, min_length=False):
     if len(values) == 0:
-        raise NotEnoughParametersException(u'{} requires one parameter: <list>'.format(name))
+        raise NotEnoughParametersException('{} requires one parameter: <list>'.format(name))
     if len(values) > 1:
-        raise TooManyParametersException(u'{} requires one parameter: <list>'.format(name))
+        raise TooManyParametersException('{} requires one parameter: <list>'.format(name))
     l = values[0]
     if l.type != Value.LIST:
-        raise UnsupportedParameterType(u'parameter of {} must be a list'.format(name))
+        raise UnsupportedParameterType('parameter of {} must be a list'.format(name))
     if min_length and len(l.value) == 0:
-        raise UnsupportedParameterType(u'{}: list needs at least one element'.format(name))
+        raise UnsupportedParameterType('{}: list needs at least one element'.format(name))
     return l.value
 
 
@@ -117,55 +117,55 @@ def list_tail(interpreter, values):
 
 def boolean_not(interpreter, values):
     if len(values) == 0:
-        raise NotEnoughParametersException(u'not requires one parameter')
+        raise NotEnoughParametersException('not requires one parameter')
     if len(values) > 1:
-        raise TooManyParametersException(u'not requires one parameter')
+        raise TooManyParametersException('not requires one parameter')
     boolean = values[0]
     if boolean.type != Value.BOOLEAN:
-        raise UnsupportedParameterType(u'parameter of not must be a boolean')
+        raise UnsupportedParameterType('parameter of not must be a boolean')
     return Value(Value.BOOLEAN, not boolean.value)
 
 
 def boolean_and(interpreter, values):
     if len(values) < 2:
-        raise NotEnoughParametersException(u'and requires at least two parameters')
+        raise NotEnoughParametersException('and requires at least two parameters')
     if values[0].type != Value.BOOLEAN:
-        raise UnsupportedParameterType(u'parameters of and must be booleans')
+        raise UnsupportedParameterType('parameters of and must be booleans')
     boolean = values[0].value
     for value in values[1:]:
         if not value.type == Value.BOOLEAN:
-            raise UnsupportedParameterType(u'parameters of and must be booleans')
+            raise UnsupportedParameterType('parameters of and must be booleans')
         boolean = boolean and value.value
     return Value(Value.BOOLEAN, boolean)
 
 
 def boolean_or(interpreter, values):
     if len(values) < 2:
-        raise NotEnoughParametersException(u'or requires at least two parameters')
+        raise NotEnoughParametersException('or requires at least two parameters')
     if values[0].type != Value.BOOLEAN:
-        raise UnsupportedParameterType(u'parameters of or must be booleans')
+        raise UnsupportedParameterType('parameters of or must be booleans')
     boolean = values[0].value
     for value in values[1:]:
         if not value.type == Value.BOOLEAN:
-            raise UnsupportedParameterType(u'parameters of or must be booleans')
+            raise UnsupportedParameterType('parameters of or must be booleans')
         boolean = boolean or value.value
     return Value(Value.BOOLEAN, boolean)
 
 
 def _two_param_integer_func(values, name):
     if len(values) < 2:
-        raise NotEnoughParametersException(u'{} requires three parameters'.format(name))
+        raise NotEnoughParametersException('{} requires three parameters'.format(name))
     if len(values) > 2:
-        raise TooManyParametersException(u'{} requires three parameters'.format(name))
+        raise TooManyParametersException('{} requires three parameters'.format(name))
     if values[0].type != Value.INTEGER:
-        raise UnsupportedParameterType(u'first parameter of {} must be an integer'.format(name))
+        raise UnsupportedParameterType('first parameter of {} must be an integer'.format(name))
     if values[1].type != Value.INTEGER:
-        raise UnsupportedParameterType(u'second parameter of {} must be an integer'.format(name))
+        raise UnsupportedParameterType('second parameter of {} must be an integer'.format(name))
     return values[0].value, values[1].value
 
 
 def smaller_than(interpreter, values):
-    value1, value2 = _two_param_integer_func(values, u'<')
+    value1, value2 = _two_param_integer_func(values, '<')
     if value1 < value2:
         return Value(Value.BOOLEAN, True)
     else:
@@ -173,7 +173,7 @@ def smaller_than(interpreter, values):
 
 
 def bigger_than(interpreter, values):
-    value1, value2 = _two_param_integer_func(values, u'<')
+    value1, value2 = _two_param_integer_func(values, '<')
     if value1 > value2:
         return Value(Value.BOOLEAN, True)
     else:
@@ -181,7 +181,7 @@ def bigger_than(interpreter, values):
 
 
 def smaller_or_equal_than(interpreter, values):
-    value1, value2 = _two_param_integer_func(values, u'<')
+    value1, value2 = _two_param_integer_func(values, '<')
     if value1 <= value2:
         return Value(Value.BOOLEAN, True)
     else:
@@ -189,7 +189,7 @@ def smaller_or_equal_than(interpreter, values):
 
 
 def bigger_or_equal_than(interpreter, values):
-    value1, value2 = _two_param_integer_func(values, u'<')
+    value1, value2 = _two_param_integer_func(values, '<')
     if value1 >= value2:
         return Value(Value.BOOLEAN, True)
     else:
@@ -198,36 +198,36 @@ def bigger_or_equal_than(interpreter, values):
 
 def equals(interpreter, values):
     if len(values) < 2:
-        raise NotEnoughParametersException(u'== requires two parameters')
+        raise NotEnoughParametersException('== requires two parameters')
     if len(values) > 2:
-        raise TooManyParametersException(u'== requires two parameters')
+        raise TooManyParametersException('== requires two parameters')
     value1, value2 = values
     if value1.type != value2.type:
-        raise UnsupportedParameterType(u'both parameters of == must be the same type')
+        raise UnsupportedParameterType('both parameters of == must be the same type')
     return value1.value == value2.value
 
 
 def not_equals(interpreter, values):
     if len(values) < 2:
-        raise NotEnoughParametersException(u'== requires two parameters')
+        raise NotEnoughParametersException('== requires two parameters')
     if len(values) > 2:
-        raise TooManyParametersException(u'== requires two parameters')
+        raise TooManyParametersException('== requires two parameters')
     value1, value2 = values
     if value1.type != value2.type:
-        raise UnsupportedParameterType(u'both parameters of == must be the same type')
+        raise UnsupportedParameterType('both parameters of == must be the same type')
     return value1.value != value2.value
 
 
 def if_builtin(interpreter, values):
     if len(values) < 3:
-        raise NotEnoughParametersException(u'if requires three parameters')
+        raise NotEnoughParametersException('if requires three parameters')
     if len(values) > 3:
-        raise TooManyParametersException(u'if requires three parameters')
+        raise TooManyParametersException('if requires three parameters')
 
     condition, true_value, false_value = values
 
     if condition.type != Value.BOOLEAN:
-        raise UnsupportedParameterType(u'first parameter of if must be a boolean')
+        raise UnsupportedParameterType('first parameter of if must be a boolean')
 
     if condition.value:
         return true_value

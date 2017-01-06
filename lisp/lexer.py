@@ -16,16 +16,13 @@ class Token(object):
         self.type = token_type
         self.value = value
 
-    def __unicode__(self):
+    def __str__(self):
         type_name = self.type
         for k, v in self.__class__.__dict__.items():
             if not k.startswith('_') and v == self.type:
                 type_name = k
                 break
-        return u'Token({}, {})'.format(type_name, self.value)
-
-    def __str__(self):
-        return unicode(self).encode('utf-8')
+        return 'Token({}, {})'.format(type_name, self.value)
 
 
 def lex(code):
@@ -57,9 +54,9 @@ def lex(code):
                 i += 1
                 if i >= len(code) or code[i] == '\n':
                     break
-        elif re.match(r'[a-zA-Z\+\-\*/<>=!]', char):
+        elif re.match(r'[a-zA-Z+\-*/<>=!]', char):
             identifier = char
-            while re.match(r'[a-zA-Z\+\-\*/<>=!0-9]', code[i + 1]):
+            while re.match(r'[a-zA-Z+\-*/<>=!0-9]', code[i + 1]):
                 identifier += code[i + 1]
                 i += 1
             tokens.append(Token(Token.IDENTIFIER, identifier))
@@ -72,7 +69,7 @@ def lex(code):
         elif re.match(r'\s', char):  # whitespaces
             pass
         else:
-            raise Exception(u'Unknown character: {}'.format(char))
+            raise Exception('Unknown character: {}'.format(char))
 
         i += 1
     tokens.append(Token(Token.END_OF_FILE))

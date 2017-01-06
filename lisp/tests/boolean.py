@@ -33,9 +33,9 @@ class BooleanTestCase(BaseTestCase):
         for a in (True, False):
             for b in (True, False):
                 for c in (True, False):
-                    program = '(println (and {} {} {}))'.format(unicode(a).lower(), unicode(b).lower(),
-                                                                unicode(c).lower())
-                    stdout = unicode((a and b) and c).lower() + '\n'
+                    program = '(println (and {} {} {}))'.format(str(a).lower(), str(b).lower(),
+                                                                str(c).lower())
+                    stdout = str((a and b) and c).lower() + '\n'
                     self.assert_stdout(program, stdout)
 
     # or
@@ -55,7 +55,7 @@ class BooleanTestCase(BaseTestCase):
         for a in (True, False):
             for b in (True, False):
                 for c in (True, False):
-                    program = '(println (or {} {} {}))'.format(unicode(a).lower(), unicode(b).lower(),
-                                                                unicode(c).lower())
-                    stdout = unicode((a or b) or c).lower() + '\n'
+                    program = '(println (or {} {} {}))'.format(str(a).lower(), str(b).lower(),
+                                                               str(c).lower())
+                    stdout = str((a or b) or c).lower() + '\n'
                     self.assert_stdout(program, stdout)

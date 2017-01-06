@@ -1,4 +1,3 @@
-import itertools
 import sys
 
 from lisp import interpreter_builtins
@@ -35,7 +34,7 @@ class Interpreter(object):
             elif value.value in self.variables:
                 return self.variables[value.value]
             else:
-                raise Exception(u'Unknown variable {}'.format(value.value))
+                raise Exception('Unknown variable {}'.format(value.value))
         elif isinstance(value, Call):
             operator = value.expressions[0]
 
@@ -47,9 +46,9 @@ class Interpreter(object):
 
             if operator.value == 'def':
                 if not len(value.expressions) == 3:
-                    raise Exception(u'def takes exactly two arguments')
+                    raise Exception('def takes exactly two arguments')
                 if not isinstance(value.expressions[1], Identifier):
-                    raise Exception(u'The first argument of def must be an identifier')
+                    raise Exception('The first argument of def must be an identifier')
                 variable_value = self.evaluate(value.expressions[2], variable_context)
                 variable_name = value.expressions[1].value
                 self.variables[variable_name] = variable_value
@@ -66,21 +65,21 @@ class Interpreter(object):
                 elif operator.value in self.variables:
                     variable = self.variables[operator.value]
                     if variable.type != Value.FUNCTION:
-                        raise Exception(u'Trying to call non-function value: {}'.format(variable))
+                        raise Exception('Trying to call non-function value: {}'.format(variable))
                     func_context = variable_context.copy()
                     func_context.update(variable.variable_context)
                     return self.function(variable.value, values, func_context)
                 else:
-                    raise Exception(u'Trying to call unknown function: {}'.format(operator.value))
+                    raise Exception('Trying to call unknown function: {}'.format(operator.value))
             else:
-                raise Exception(u'Trying to execute non-function as function')
+                raise Exception('Trying to execute non-function as function')
 
     def function(self, func, params, variable_context):
         if len(func.param_names) != len(params):
-            raise Exception(u'Argument count does not match')
+            raise Exception('Argument count does not match')
 
         variable_context = variable_context.copy()
-        for param_name, param_value in itertools.izip(func.param_names, params):
+        for param_name, param_value in zip(func.param_names, params):
             variable_context[param_name] = param_value
 
         return self.evaluate(func.expression, variable_context)
