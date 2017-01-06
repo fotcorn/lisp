@@ -15,8 +15,10 @@ class Interpreter(object):
         self.stdout = stdout
 
     def run(self):
+        value = None
         for expression in self.ast:
-            self.evaluate(expression, {})
+            value = self.evaluate(expression, {})
+        return value
 
     def evaluate(self, value, variable_context):
         if isinstance(value, Number):
@@ -88,4 +90,4 @@ class Interpreter(object):
 
 def run(ast):
     interpreter = Interpreter(ast, interpreter_builtins.builtins)
-    interpreter.run()
+    return interpreter.run()

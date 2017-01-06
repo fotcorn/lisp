@@ -31,7 +31,9 @@ if __name__ == '__main__':
             try:
                 tokens = lex(line)
                 ast = parse(tokens)
-                run(ast)
+                value = run(ast)
+                if value:
+                    print(value)
             except (LexerException, ParseError, InterpreterException) as ex:
                 print('Error: ', str(ex))
     else:
