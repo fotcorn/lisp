@@ -70,12 +70,12 @@ class Parser(object):
             self.next_token()
             return True
         elif self.current_token.type == Token.END_OF_FILE:
-            raise Exception('Unexpected end of file {}'.format(self.current_token))
+            raise ParseError('Unexpected end of file {}'.format(self.current_token))
         return False
 
     def expect(self, token_type):
         if not self.accept(token_type):
-            raise Exception('Parse error on token {}'.format(self.current_token))
+            raise ParseError('Parse error on token {}'.format(self.current_token))
 
     def expression(self):
         if self.current_token.type == Token.IDENTIFIER and self.current_token.value == 'fn':
@@ -95,7 +95,7 @@ class Parser(object):
         elif self.accept(Token.EXPRESSION_END):
             return None
         else:
-            raise Exception('Parse error on token {}'.format(self.current_token))
+            raise ParseError('Parse error on token {}'.format(self.current_token))
 
     def call(self):
         current_expression = []
@@ -120,9 +120,13 @@ class Parser(object):
             elif self.accept(Token.BRACKET_CLOSE):
                 break
             else:
-                raise Exception('Parse error in function parameter list on token {}'.format(self.current_token))
+                raise ParseError('Parse error in function parameter list on token {}'.format(self.current_token))
         value = self.value()
         if not value:
-            raise Exception('Parse error on token {}'.format(self.current_token))
+            raise ParseError('Parse error on token {}'.format(self.current_token))
         self.expect(Token.EXPRESSION_END)
         return Function(function_params, value)
+
+
+class ParseError(Exception):
+    pass

@@ -1,17 +1,17 @@
 
 
-class BaseInterpreterException(Exception):
+class InterpreterException(Exception):
     def __init__(self, *args, **kwargs):
-        super(BaseInterpreterException, self).__init__(*args, **kwargs)
+        super(InterpreterException, self).__init__(*args, **kwargs)
 
 
-class NotEnoughParametersException(BaseInterpreterException):
+class NotEnoughParametersException(InterpreterException):
     pass
 
 
-class TooManyParametersException(BaseInterpreterException):
+class TooManyParametersException(InterpreterException):
     pass
 
 
-class UnsupportedParameterType(BaseInterpreterException):
+class UnsupportedParameterType(InterpreterException):
     pass

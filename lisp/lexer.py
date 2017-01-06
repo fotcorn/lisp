@@ -69,8 +69,12 @@ def lex(code):
         elif re.match(r'\s', char):  # whitespaces
             pass
         else:
-            raise Exception('Unknown character: {}'.format(char))
+            raise LexerException('Unknown character: {}'.format(char))
 
         i += 1
     tokens.append(Token(Token.END_OF_FILE))
     return tokens
+
+
+class LexerException(Exception):
+    pass
