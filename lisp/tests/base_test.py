@@ -13,8 +13,8 @@ class BaseTestCase(unittest.TestCase):
         ast = parse(tokens)
 
         stdout_file = StringIO()
-        interpreter = Interpreter(ast, interpreter_builtins.builtins, stdout=stdout_file)
-        interpreter.run()
+        interpreter = Interpreter(interpreter_builtins.builtins, stdout=stdout_file)
+        interpreter.run(ast)
 
         self.assertEqual(stdout_file.getvalue(), stdout)
 
@@ -22,5 +22,5 @@ class BaseTestCase(unittest.TestCase):
         tokens = lex(program)
         ast = parse(tokens)
 
-        interpreter = Interpreter(ast, interpreter_builtins.builtins)
-        self.assertRaises(exception_type, interpreter.run)
+        interpreter = Interpreter(interpreter_builtins.builtins)
+        self.assertRaises(exception_type, interpreter.run, ast)

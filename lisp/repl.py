@@ -2,16 +2,20 @@ import sys
 
 import readline
 
+from lisp import interpreter_builtins
 from lisp.interpreter_exceptions import InterpreterException
 from lisp.lexer import lex, LexerException
 from lisp.parser import parse, ParseError
-from lisp.interpreter import run
+from lisp.interpreter import run, Interpreter
 
 
 def repl():
     print("Write 'exit' to exit repl")
 
     readline.parse_and_bind('')
+
+    interpreter = Interpreter(interpreter_builtins.builtins)
+
     while True:
         try:
             line = input('>>> ')
@@ -25,7 +29,7 @@ def repl():
         try:
             tokens = lex(line)
             ast = parse(tokens)
-            value = run(ast)
+            value = interpreter.run(ast)
             if value:
                 print(value)
         except (LexerException, ParseError, InterpreterException) as ex:

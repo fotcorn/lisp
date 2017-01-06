@@ -8,15 +8,14 @@ from lisp.parser import Identifier, Function, Number, String, Call
 
 class Interpreter(object):
 
-    def __init__(self, ast, builtins, stdout=sys.stdout):
+    def __init__(self, builtins, stdout=sys.stdout):
         self.variables = {}
         self.builtins = builtins
-        self.ast = ast
         self.stdout = stdout
 
-    def run(self):
+    def run(self, ast):
         value = None
-        for expression in self.ast:
+        for expression in ast:
             value = self.evaluate(expression, {})
         return value
 
@@ -89,5 +88,5 @@ class Interpreter(object):
 
 
 def run(ast):
-    interpreter = Interpreter(ast, interpreter_builtins.builtins)
-    return interpreter.run()
+    interpreter = Interpreter(interpreter_builtins.builtins)
+    return interpreter.run(ast)
