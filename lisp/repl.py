@@ -1,6 +1,7 @@
+import os
 import sys
-
 import readline
+import atexit
 
 from lisp import interpreter_builtins
 from lisp.interpreter_exceptions import InterpreterException
@@ -11,6 +12,14 @@ from lisp.interpreter import run, Interpreter
 
 def repl():
     print("Write 'exit' to exit repl")
+
+    history_file = os.path.join(os.path.expanduser("~"), ".fotcorn_lisp_history")
+    try:
+        readline.read_history_file(history_file)
+        readline.set_history_length(1000)
+    except FileNotFoundError:
+        pass
+    atexit.register(readline.write_history_file, history_file)
 
     readline.parse_and_bind('')
 
