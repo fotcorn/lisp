@@ -45,6 +45,8 @@ def lex(code):
             string = ''
             while True:
                 i += 1
+                if i >= len(code):
+                    raise LexerException('Unclosed string literal')
                 if code[i] == '"':
                     break
                 string += code[i]
@@ -56,15 +58,23 @@ def lex(code):
                     break
         elif re.match(r'[a-zA-Z+\-*/<>=!]', char):
             identifier = char
+            if i + 1 >= len(code):
+                raise LexerException('Lexer error while parsing identifier')
             while re.match(r'[a-zA-Z+\-*/<>=!0-9]', code[i + 1]):
                 identifier += code[i + 1]
                 i += 1
+                if i + 1 >= len(code):
+                    raise LexerException('Lexer error while parsing identifier')
             tokens.append(Token(Token.IDENTIFIER, identifier))
         elif re.match(r'[0-9]', char):
             number = char
+            if i + 1 >= len(code):
+                raise LexerException('Lexer error while parsing number')
             while re.match(r'[0-9]', code[i + 1]):
                 number += code[i + 1]
                 i += 1
+                if i + 1 >= len(code):
+                    raise LexerException('Lexer error while parsing number')
             tokens.append(Token(Token.NUMBER, int(number)))
         elif re.match(r'\s', char):  # whitespaces
             pass
