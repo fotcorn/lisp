@@ -58,6 +58,8 @@ class Parser(object):
                 break
             elif self.accept(Token.EXPRESSION_START):
                 expressions.append(self.call())
+            else:
+                raise ParseError('Parse error')
         return expressions
 
     def next_token(self):
